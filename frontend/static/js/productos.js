@@ -24,5 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
             })
 
             productos.innerHTML = html
+            document.getElementById('spinner').style.display = 'none'
         });
 })
