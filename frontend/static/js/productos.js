@@ -1,5 +1,6 @@
-document.addEventListener('DOMContentLoaded', () => {
-    fetch('http://localhost:3000/productos')
+function listarProductos() {
+    let url = 'http://localhost:3000/productos';
+    fetch(url, {})
         .then(response => response.json())
         .then(data => {
             let productos = document.getElementById('productos')
@@ -26,4 +27,34 @@ document.addEventListener('DOMContentLoaded', () => {
             productos.innerHTML = html
             document.getElementById('spinner').style.display = 'none'
         });
-})
+}
+
+function crearProducto() {
+    let url = 'http://localhost:3000/productos'
+
+    let nombre = document.getElementById("nombre").value
+    let precio = document.getElementById("precio").value
+
+    let data = new URLSearchParams({
+        'nombre': nombre,
+        'precio': precio
+    })
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: data
+    }).then(response => response.json()).then(data => {
+        location.href = "/products"
+    }).catch(error => {
+        console.log(error);
+        document.getElementById("error").innerText = "Ocurrió un error " + error
+    })
+
+}
+
+function editarProducto() {
+
+}

@@ -47,6 +47,8 @@ app.post("/productos", (req, res) => {
         nombre: req.body.nombre,
     }).then(producto => {
         res.json(producto)
+    }).catch(error => {
+        res.json(error)
     })
 })
 app.post("/compras", (req, res) => {
