@@ -10,6 +10,7 @@
   <body>
     <div class="container mt-5">
         <div class="card card-body">
+            <a href="/products" class="mb-2">Volver</a>
             <div class="h3 card-title">Crear producto</div>
             <form>
               <div class="mb-3">
@@ -23,7 +24,7 @@
                   <input type="number" step="0.1" class="form-control" id="precio" name="precio">
                 </div>
               </div>
-              <button type="button" class="btn btn-success" onclick="crearProducto()">Guardar</button>
+              <button type="button" class="btn btn-success" onclick="crearProducto()" id="guardar">Guardar</button>
               <div class="form-text text-danger" id="error"></div>
             </form>
         </div>
