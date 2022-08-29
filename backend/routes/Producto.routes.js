@@ -30,6 +30,22 @@ router.post("/create", (req, res) => {
     })
 })
 
+router.put('/update/:id', (req, res) => {
+    console.log(req.body)
+    Producto.update({
+        nombre: req.body.nombre,
+        precio: req.body.precio
+    }, {
+        where: {
+            id: req.params.id
+        }
+    }).then(data => {
+        res.json(data)
+    }).catch(error => {
+        res.json(error)
+    })
+})
+
 router.delete('/delete/:id', (req, res) => {
     Producto.destroy({
         where: {
