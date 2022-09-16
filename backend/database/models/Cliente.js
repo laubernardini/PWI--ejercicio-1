@@ -7,8 +7,7 @@ Cliente.init({
     dni: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
-        primaryKey: true
+        unique: true
     },
     nombre: DataTypes.STRING,
     apellido: DataTypes.STRING,

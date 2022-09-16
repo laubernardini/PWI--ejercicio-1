@@ -1,4 +1,8 @@
-const { Cliente, Producto, ClienteProducto } = require('./models')
+const { Cliente, Producto, Venta } = require('./models')
 
-Cliente.belongsToMany(Producto, { through: ClienteProducto, foreignKey: 'clienteDni' })
-Producto.belongsToMany(Cliente, { through: ClienteProducto, foreignKey: 'productoId' })
+Cliente.hasMany(Venta, { foreignKey: 'clienteId' })
+Venta.belongsTo(Cliente, { foreignKey: 'productoId' })
+
+
+Producto.hasMany(Venta, { foreignKey: 'productoId' })
+Venta.belongsTo(Producto, { foreignKey: 'productoId' })

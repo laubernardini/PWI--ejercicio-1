@@ -1,24 +1,31 @@
 const router = require('express').Router()
-const { Producto, Cliente } = require('../database/models')
+const { Producto, Cliente, Venta } = require('../database/models')
 
 router.get("/:id", (req, res) => {
-    Producto.findByPk(req.params.id).then(obj => {
+    Venta.findByPk(req.params.id, {}).then(obj => {
         res.json(obj)
     })
 })
 
 router.get("/", (req, res) => {
-    Producto.findAll({
-        attributes: ['id', 'nombre', 'precio'],
+    Venta.findAll({
+        attributes: ["id"],
+        include: [{
+            model: Cliente,
+            attributes: ["nombre", "apellido", "dni"]
+        }, {
+            model: Producto,
+            attributes: ["nombre"]
+        }]
     }).then(list => {
         res.json(list)
     })
 })
 
 router.post("/create", (req, res) => {
-    Producto.create({
-        precio: req.body.precio,
-        nombre: req.body.nombre,
+    Venta.create({
+        clienteId: req.body.clienteId,
+        productoId: req.body.productoId,
     }).then(producto => {
         res.json(producto)
     }).catch(error => {
@@ -28,9 +35,9 @@ router.post("/create", (req, res) => {
 
 router.put('/update/:id', (req, res) => {
     console.log(req.body)
-    Producto.update({
-        nombre: req.body.nombre,
-        precio: req.body.precio
+    Venta.update({
+        clienteId: req.body.clienteId,
+        productoId: req.body.productoId
     }, {
         where: {
             id: req.params.id
@@ -43,7 +50,7 @@ router.put('/update/:id', (req, res) => {
 })
 
 router.delete('/delete/:id', (req, res) => {
-    Producto.destroy({
+    Venta.destroy({
         where: {
             id: req.params.id
         }
@@ -54,4 +61,4 @@ router.delete('/delete/:id', (req, res) => {
     })
 })
 
-module.exports = router;
+module.exports = router
