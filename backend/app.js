@@ -17,7 +17,7 @@ app.use('/', router)
 app.listen(port, () => {
     console.log(`Server en puerto ${port}`)
 
-    sequelize.sync({ force: false }).then(() => {
+    sequelize.sync({ alter: false }).then(() => {
         console.log('Sincronizado')
     })
 })

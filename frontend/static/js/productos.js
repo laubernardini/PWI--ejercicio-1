@@ -22,6 +22,7 @@ function getProducto() {
     fetch(url).then(res => { return res.json() }).then(object => {
         document.getElementById("nombre").value = object.nombre
         document.getElementById("precio").value = object.precio
+        loadSelect(proveedor = object.proveedorId)
 
         document.getElementById("form").className = ""
         document.getElementById('spinner').className = "d-none"
@@ -45,6 +46,7 @@ function listarProductos() {
                         <td>${product.id}</td>
                         <td class="nombre">${product.nombre}</td>
                         <td>$${product.precio}</td>
+                        <td>${product.proveedor.nombre} (${product.proveedor.nif})</td>
                         <td>
                             <a type="button" href="/products/update/${product.id}" class="btn btn-outline-light btn-sm"><i class="bi bi-pencil-square text-dark"></i></a>
                             <button type="button" class="btn btn-outline-light btn-sm" onclick="eliminarProducto('${product.id}')"><i class="bi bi-trash3-fill text-danger"></i></button>
@@ -66,10 +68,12 @@ function crearProducto() {
     const url = 'http://localhost:3000/productos/create'
     const nombre = document.getElementById("nombre")
     const precio = document.getElementById("precio")
+    const proveedor = document.getElementById("proveedor")
 
     const data = {
         'nombre': nombre.value,
-        'precio': precio.value
+        'precio': precio.value,
+        'proveedorId': proveedor.value
     }
 
     fetch(url, {
@@ -93,10 +97,12 @@ function editarProducto() {
     const url = `http://localhost:3000/productos/update/${producto_id}`
     const nombre = document.getElementById("nombre")
     const precio = document.getElementById("precio")
+    const proveedor = document.getElementById("proveedor")
 
     const data = {
         'nombre': nombre.value,
-        'precio': precio.value
+        'precio': precio.value,
+        'proveedorId': proveedor.value
     }
 
     fetch(url, {
@@ -127,4 +133,32 @@ function eliminarProducto(id) {
             document.getElementById("error").innerText = "Ocurrió un error " + error
         })
     }
+}
+
+// RELACIONES
+
+function getProveedores(proveedores, proveedor) {
+    let url = 'http://localhost:3000/proveedores';
+    fetch(url, {})
+        .then(response => response.json())
+        .then(data => {
+            let html = '<option value="null">Seleccionar</option>'
+            let selected = ''
+            data.map(item => {
+                if (item.id == proveedor) {
+                    selected = 'selected'
+                } else {
+                    selected = ''
+                }
+
+                html += `<option value="${item.id}" ${selected}>${item.nombre}</option>`
+            })
+            proveedores.innerHTML = html
+        });
+}
+
+function loadSelect(proveedor = null) {
+    const proveedores = document.getElementById("proveedor")
+
+    getProveedores(proveedores, proveedor)
 }

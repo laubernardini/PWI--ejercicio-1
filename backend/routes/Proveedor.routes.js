@@ -1,42 +1,37 @@
 const router = require('express').Router()
-const { Producto, Proveedor } = require('../database/models')
+const { Proveedor } = require('../database/models')
 
 router.get("/:id", (req, res) => {
-    Producto.findByPk(req.params.id).then(obj => {
+    Proveedor.findByPk(req.params.id).then(obj => {
         res.json(obj)
     })
 })
 
 router.get("/", (req, res) => {
-    Producto.findAll({
-        attributes: ['id', 'nombre', 'precio'],
-        include: [{
-            model: Proveedor,
-            attributes: ["nombre", "nif"]
-        }]
-    }).then(list => {
+    Proveedor.findAll({}).then(list => {
         res.json(list)
     })
 })
 
 router.post("/create", (req, res) => {
-    Producto.create({
-        precio: req.body.precio,
+    Proveedor.create({
+        nif: req.body.nif,
         nombre: req.body.nombre,
-        proveedorId: req.body.proveedorId
-    }).then(producto => {
-        res.json(producto)
-    }).catch(error => {
-        res.json(error)
+        apellido: req.body.apellido,
+        direccion: req.body.direccion,
+        fechaNacimiento: req.body.fechaNacimiento
+    }).then(obj => {
+        res.json(obj)
     })
 })
 
 router.put('/update/:id', (req, res) => {
-    console.log(req.body)
-    Producto.update({
+    Proveedor.update({
+        nif: req.body.nif,
         nombre: req.body.nombre,
-        precio: req.body.precio,
-        proveedorId: req.body.proveedorId
+        apellido: req.body.apellido,
+        direccion: req.body.direccion,
+        fechaNacimiento: req.body.fechaNacimiento
     }, {
         where: {
             id: req.params.id
@@ -49,7 +44,7 @@ router.put('/update/:id', (req, res) => {
 })
 
 router.delete('/delete/:id', (req, res) => {
-    Producto.destroy({
+    Proveedor.destroy({
         where: {
             id: req.params.id
         }
@@ -60,4 +55,4 @@ router.delete('/delete/:id', (req, res) => {
     })
 })
 
-module.exports = router;
+module.exports = router
