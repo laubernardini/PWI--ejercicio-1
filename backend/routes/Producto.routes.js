@@ -12,6 +12,7 @@ router.get("/", (req, res) => {
         attributes: ['id', 'nombre', 'precio'],
         include: [{
             model: Proveedor,
+            as: 'proveedor',
             attributes: ["nombre", "nif"]
         }]
     }).then(list => {
@@ -32,7 +33,6 @@ router.post("/create", (req, res) => {
 })
 
 router.put('/update/:id', (req, res) => {
-    console.log(req.body)
     Producto.update({
         nombre: req.body.nombre,
         precio: req.body.precio,

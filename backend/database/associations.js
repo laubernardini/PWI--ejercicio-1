@@ -6,5 +6,5 @@ Venta.belongsTo(Cliente, { foreignKey: 'productoId' })
 Producto.hasMany(Venta, { foreignKey: 'productoId' })
 Venta.belongsTo(Producto, { foreignKey: 'productoId' })
 
-Proveedor.hasMany(Producto, { foreignKey: 'proveedorId' })
-Producto.belongsTo(Proveedor, { foreignKey: 'proveedorId' })
+Proveedor.hasMany(Producto, { foreignKey: 'proveedorId', as: 'productos' })
+Producto.belongsTo(Proveedor, { foreignKey: 'proveedorId', as: 'proveedor' })

@@ -36,17 +36,23 @@ function listarProductos() {
     fetch(url, {})
         .then(response => response.json())
         .then(data => {
-
             let productos = document.getElementById('productos')
-
             let html = ''
+            let proveedor = ''
+
             data.map(product => {
+                if (product.proveedor !== null && product.proveedor !== undefined && product.proveedor !== {}) {
+                    proveedor = `${product.proveedor.nombre} (${product.proveedor.nif})`
+                } else {
+                    proveedor = ''
+                }
+
                 html += `
                     <tr id="${product.id}">
                         <td>${product.id}</td>
                         <td class="nombre">${product.nombre}</td>
                         <td>$${product.precio}</td>
-                        <td>${product.proveedor.nombre} (${product.proveedor.nif})</td>
+                        <td>${proveedor}</td>
                         <td>
                             <a type="button" href="/products/update/${product.id}" class="btn btn-outline-light btn-sm"><i class="bi bi-pencil-square text-dark"></i></a>
                             <button type="button" class="btn btn-outline-light btn-sm" onclick="eliminarProducto('${product.id}')"><i class="bi bi-trash3-fill text-danger"></i></button>
