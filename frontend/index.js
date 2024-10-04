@@ -14,4 +14,5 @@ app.use("/", router)
 
 app.listen(port, () => {
     console.log(`Frontend ${port}`);
+    console.log("test")
 })
